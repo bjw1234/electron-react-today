@@ -1,28 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Button from '@material-ui/core/Button';
+import React, { useReducer, createContext } from 'react';
+import { initialTodos, filterReducer, todosReducer } from './reducer/index';
+
+import Filter from './components/Filter';
+import AddTodo from './components/AddTodo';
+import TodoList from './components/TodoList';
+
+// 导出共享对象
+export const AppContext = createContext();
 
 function App() {
+  const [todos, dispatchTodos] = useReducer(todosReducer, initialTodos);
+  const [filterVal, dispatchFilter] = useReducer(filterReducer, 'ALL');
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <Button variant="contained" color="primary">
-          你好，世界
-        </Button>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ margin: '20px 30px 0', maxWidth: 450 }}>
+      <AppContext.Provider value={dispatchTodos}>
+        <AddTodo />
+        <Filter dispatch={dispatchFilter} />
+        <TodoList filterVal={filterVal} todos={todos} />
+      </AppContext.Provider>
     </div>
   );
 }
