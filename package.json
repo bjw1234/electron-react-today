@@ -64,7 +64,7 @@
   },
   "main": "main.js",
   "devDependencies": {
-    "electron": "^6.1.2"
+    "electron": "^9.1.0"
   },
   "scripts": {
     "start": "node scripts/start.js",
